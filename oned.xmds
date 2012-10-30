@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<simulation xmds-version="2">
+  <name>oned</name>
+
+  <author>Rodney Polkinghorne</author>
+  <description>
+    Gross-Pitaevskii equations for the dynamically stabilised false vacuum, in one dimension.
+  </description>
+
+  <features>
+    <bing />
+    <diagnostics />
+    <fftw plan="patient" />
+    <auto_vectorise />
+    <arguments>
+        <argument name="qv" type="real" default_value="0.1" />
+        <argument name="s" type="real" default_value="1" />
+        <argument name="g0" type="real" default_value="0.1" />
+        <argument name="g1" type="real" default_value="0.1" />
+        <argument name="f" type="real" default_value="0.1" />
+        <argument name="b" type="real" default_value="1" />
+        <argument name="a" type="real" default_value="0.001" />
+     </arguments>
+   </features>
+
+  <geometry>
+    <propagation_dimension> t </propagation_dimension>
+    <transverse_dimensions>
+      <dimension name="space" lattice="128" domain="(-5,5)" />
+    </transverse_dimensions>
+  </geometry>
+  
+  <driver name="multi-path" paths="1" />
+
+  <noise_vector name="initialPhaseNoise" dimensions="space" kind="Gaussian" 
+      type="complex">
+    <components>vnce</components>
+  </noise_vector>
+
+  <vector name="meanFields" type="complex" dimensions="space">
+    <components>q0 q1</components>
+    <initialisation>
+      <dependencies>initialPhaseNoise</dependencies>
+      <![CDATA[
+      q0 = 1.0+qv*vnce;
+      q1 = 1.0;
+      ]]>
+    </initialisation>
+  </vector>
+  
+  <computed_vector name="normalisation" dimensions="" type="real">
+    <components> N </components>
+    <evaluation>
+      <dependencies>meanFields</dependencies>
+      <![CDATA[
+        N = mod2(q0)+mod2(q1);
+      ]]>
+    </evaluation>
+  </computed_vector>
+
+  <sequence>
+    <filter>
+     <dependencies>meanFields normalisation</dependencies>
+     <![CDATA[
+       q0 /= sqrt(N);
+       q1 /= sqrt(N);
+     ]]>
+    </filter>
+        
+    <integrate algorithm="ARK45" interval="5.0" tolerance="1e-7">
+      <samples>10 100 10</samples>
+      <operators>
+        <integration_vectors>meanFields</integration_vectors>
+        <operator kind="ex" constant="yes">
+          <operator_names>L11</operator_names>
+          <![CDATA[
+            L11 = -i*s*kspace*kspace*0.5;
+          ]]>
+        </operator>
+        <![CDATA[
+        dq0_dt = L11[q0] + i*s*(1-g0*mod2(q0)-f*mod2(q1))*q0 + i*(b+a*cos(t))*q1;
+        dq1_dt = L11[q1] + i*s*(1-g1*mod2(q1)-f*mod2(q0))*q1 + i*(b+a*cos(t))*q0;
+        ]]>
+      </operators>
+    </integrate>
+  </sequence>
+  
+  <output>
+    <sampling_group basis="space" initial_sample="no">
+      <moments>density</moments>
+      <dependencies>meanFields</dependencies>
+      <![CDATA[
+        density = mod2(q1);
+      ]]>
+    </sampling_group>
+    
+    <sampling_group basis="space(0)" initial_sample="no">
+      <moments>pescape</moments>
+      <dependencies>meanFields</dependencies>
+      <![CDATA[
+        pescape = mod2(q1);
+      ]]>
+    </sampling_group>
+    
+    <sampling_group basis="space(0)" initial_sample="no">
+      <moments>Ntot</moments>
+      <dependencies>meanFields</dependencies>
+      <![CDATA[
+        Ntot = mod2(q0) + mod2(q1);
+      ]]>
+    </sampling_group>
+  </output>
+</simulation>
+

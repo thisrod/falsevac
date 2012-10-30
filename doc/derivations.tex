@@ -1,0 +1,15 @@
+\input xpmath
+\input a4
+
+% xetex derivations && open derivations.pdf
+
+The Gross-Pitaevskii equations from Sascha's paper are 
+$$i\hbar ∂₀ψ=\biggl(-{\hbar²\over 2m}∂_{11}-μ+g'|ψ|²+g_c|\bar ψ|²\bigg)ψ-ν\bar ψ,$$ where $ψ=(ψ⁰,ψ¹)$, and $\bar ψ=(ψ¹,ψ⁰)$, and absolute values are taken elementally.  Of the parameters, only $g'$ is a vector: $μ$, $g_c$ and $ν$ are scalars.  Only $ν$ depends on time, as $ν=ν₀+αω\cos(ωt)$.
+
+Transforming to dimensionless coordinates, $$ψ(t,x)=q\bigl(ωt, \sqrt{mμ}x/\hbar\bigr)=q(τ,χ),$$ gives 
+$$i\hbar ω∂₀q=\bigl(-½μ∂_{11}-μ+g'|q|²+g_c|\bar q|²\bigr)q-ν\bar q,$$ or
+$$∂₀q=is\bigl(½∂_{11}+1-g|q|²-f|\bar q|²\bigr)q+i(b+a\cos\tau)\bar q,$$ where $$s=μ/\hbar ω\qquad g=g'/μ\qquad f=g_c/μ\qquad b=ν₀/\hbar ω\qquad a=α/\hbar.$$  As stated, $q$ has dimensions ${\rm m}^{-½}$; fixing that will change the values and dimensions of $g$ and $f$, but not the form of the equation.
+
+
+
+\bye
