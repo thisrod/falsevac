@@ -14,6 +14,7 @@
     <auto_vectorise />
     <arguments>
         <argument name="qv" type="real" default_value="0.1" />
+        <argument name="phs" type="real" default_value="1.0" />
         <argument name="s" type="real" default_value="1" />
         <argument name="g0" type="real" default_value="0.1" />
         <argument name="g1" type="real" default_value="0.1" />
@@ -37,38 +38,73 @@
     <components>vnce</components>
   </noise_vector>
 
-  <vector name="meanFields" type="complex" dimensions="space">
-    <components>q0 q1</components>
+  <vector name="initialState" type="complex" dimensions="space">
+    <components>q00 q01</components>
     <initialisation>
       <dependencies>initialPhaseNoise</dependencies>
       <![CDATA[
-      q0 = 1.0+qv*vnce;
-      q1 = 1.0;
+      q00 = 1.0+qv*vnce;
+      q01 = cos(M_PI*phs) + i*sin(M_PI*phs);
+      ]]>
+    </initialisation>
+  </vector>
+
+  <vector name="meanFields" type="complex" dimensions="space">
+    <components>q0 q1</components>
+    <initialisation>
+      <dependencies>initialState</dependencies>
+      <![CDATA[
+      q0 = q00;
+      q1 = q01;
       ]]>
     </initialisation>
   </vector>
   
   <computed_vector name="normalisation" dimensions="" type="real">
-    <components> N </components>
+    <components> N NN </components>
     <evaluation>
       <dependencies>meanFields</dependencies>
       <![CDATA[
-        N = mod2(q0)+mod2(q1);
+        N = mod2(q0) + mod2(q1);
+        NN = abs(conj(q0)*q0 + conj(q1)*q1);
+      ]]>
+    </evaluation>
+  </computed_vector>
+  
+  <computed_vector name="iprod" dimensions="" type="complex">
+    <components>Xinit Xt X </components>
+    <evaluation>
+      <dependencies>meanFields initialState</dependencies>
+      <![CDATA[
+        X = conj(q00)*q0 + conj(q01)*q1;
+        Xinit = conj(q00)*q00 + conj(q01)*q01;
+        Xt = conj(q0)*q0 + conj(q1)*q1;
       ]]>
     </evaluation>
   </computed_vector>
 
   <sequence>
+
+      <breakpoint filename="initial.xsil">
+      	<dependencies>initialState</dependencies>
+      </breakpoint>
+	
     <filter>
-     <dependencies>meanFields normalisation</dependencies>
+     <dependencies>meanFields initialState normalisation</dependencies>
      <![CDATA[
+       q00 /= sqrt(N);
+       q01 /=sqrt(N);
        q0 /= sqrt(N);
-       q1 /= sqrt(N);
+       q1 /=sqrt(N);
      ]]>
     </filter>
-        
+ 
+      <breakpoint filename="normalised.xsil">
+      	<dependencies>initialState</dependencies>
+      </breakpoint>
+       
     <integrate algorithm="ARK45" interval="5.0" tolerance="1e-7">
-      <samples>10 100 10</samples>
+      <samples>100 100 100</samples>
       <operators>
         <integration_vectors>meanFields</integration_vectors>
         <operator kind="ex" constant="yes">
@@ -86,27 +122,33 @@
   </sequence>
   
   <output>
-    <sampling_group basis="space" initial_sample="no">
-      <moments>density</moments>
-      <dependencies>meanFields</dependencies>
+    <sampling_group basis="space(0)" initial_sample="no">
+      <moments>change</moments>
+      <dependencies>meanFields initialState iprod</dependencies>
       <![CDATA[
-        density = mod2(q1);
+        change = mod2(q0-X*q00) + mod2(q1-X*q01);
       ]]>
     </sampling_group>
     
-    <sampling_group basis="space(0)" initial_sample="no">
-      <moments>pescape</moments>
-      <dependencies>meanFields</dependencies>
+    <sampling_group basis="" initial_sample="no">
+      <moments>Ntot NNtot</moments>
+      <dependencies>normalisation</dependencies>
       <![CDATA[
-        pescape = mod2(q1);
+        Ntot = N;
+        NNtot = NN;
       ]]>
     </sampling_group>
     
-    <sampling_group basis="space(0)" initial_sample="no">
-      <moments>Ntot</moments>
-      <dependencies>meanFields</dependencies>
+    <sampling_group basis="" initial_sample="no">
+      <moments>Xinitabs  Xinitarg Xtabs  Xtarg Xabs  Xarg</moments>
+      <dependencies>iprod</dependencies>
       <![CDATA[
-        Ntot = mod2(q0) + mod2(q1);
+        Xabs = abs(X);
+        Xarg = arg(X);
+        Xtabs = abs(Xt);
+        Xtarg = arg(Xt);
+        Xinitabs = abs(Xinit);
+        Xinitarg = arg(Xinit);
       ]]>
     </sampling_group>
   </output>

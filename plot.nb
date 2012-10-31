@@ -1,0 +1,432 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 8.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       157,          7]
+NotebookDataLength[     16995,        422]
+NotebookOptionsPosition[     15875,        377]
+NotebookOutlinePosition[     16230,        393]
+CellTagsIndexPosition[     16187,        390]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["\<\
+SetDirectory[NotebookDirectory[]];
+t1 = Import[\"oned.h5\", {\"Datasets\", \"/1/t\"}];
+meanchange1 = Import[\"oned.h5\", {\"Datasets\", \"/1/mean_change\"}];
+stderrchange1 = Import[\"oned.h5\", {\"Datasets\", \"/1/stderr_change\"}];
+ResetDirectory[];
+SetDirectory[NotebookDirectory[]];
+t2 = Import[\"oned.h5\", {\"Datasets\", \"/2/t\"}];
+meanNtot2 = Import[\"oned.h5\", {\"Datasets\", \"/2/mean_Ntot\"}];
+meanNNtot2 = Import[\"oned.h5\", {\"Datasets\", \"/2/mean_NNtot\"}];
+stderrNtot2 = Import[\"oned.h5\", {\"Datasets\", \"/2/stderr_Ntot\"}];
+stderrNNtot2 = Import[\"oned.h5\", {\"Datasets\", \"/2/stderr_NNtot\"}];
+ResetDirectory[];
+SetDirectory[NotebookDirectory[]];
+t3 = Import[\"oned.h5\", {\"Datasets\", \"/3/t\"}];
+meanXinitabs3 = Import[\"oned.h5\", {\"Datasets\", \"/3/mean_Xinitabs\"}];
+meanXinitarg3 = Import[\"oned.h5\", {\"Datasets\", \"/3/mean_Xinitarg\"}];
+meanXtabs3 = Import[\"oned.h5\", {\"Datasets\", \"/3/mean_Xtabs\"}];
+meanXtarg3 = Import[\"oned.h5\", {\"Datasets\", \"/3/mean_Xtarg\"}];
+meanXabs3 = Import[\"oned.h5\", {\"Datasets\", \"/3/mean_Xabs\"}];
+meanXarg3 = Import[\"oned.h5\", {\"Datasets\", \"/3/mean_Xarg\"}];
+stderrXinitabs3 = Import[\"oned.h5\", {\"Datasets\", \
+\"/3/stderr_Xinitabs\"}];
+stderrXinitarg3 = Import[\"oned.h5\", {\"Datasets\", \
+\"/3/stderr_Xinitarg\"}];
+stderrXtabs3 = Import[\"oned.h5\", {\"Datasets\", \"/3/stderr_Xtabs\"}];
+stderrXtarg3 = Import[\"oned.h5\", {\"Datasets\", \"/3/stderr_Xtarg\"}];
+stderrXabs3 = Import[\"oned.h5\", {\"Datasets\", \"/3/stderr_Xabs\"}];
+stderrXarg3 = Import[\"oned.h5\", {\"Datasets\", \"/3/stderr_Xarg\"}];
+ResetDirectory[];
+
+declaredVariables={\"t1\", \"meanchange1\", \"stderrchange1\", \"t2\", \
+\"meanNtot2\", \"meanNNtot2\", \"stderrNtot2\", \"stderrNNtot2\", \"t3\", \
+\"meanXinitabs3\", \"meanXinitarg3\", \"meanXtabs3\", \"meanXtarg3\", \
+\"meanXabs3\", \"meanXarg3\", \"stderrXinitabs3\", \"stderrXinitarg3\", \
+\"stderrXtabs3\", \"stderrXtarg3\", \"stderrXabs3\", \"stderrXarg3\"}
+\
+\>", "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"\<\"t1\"\>", ",", "\<\"meanchange1\"\>", 
+   ",", "\<\"stderrchange1\"\>", ",", "\<\"t2\"\>", ",", "\<\"meanNtot2\"\>", 
+   ",", "\<\"meanNNtot2\"\>", ",", "\<\"stderrNtot2\"\>", 
+   ",", "\<\"stderrNNtot2\"\>", ",", "\<\"t3\"\>", 
+   ",", "\<\"meanXinitabs3\"\>", ",", "\<\"meanXinitarg3\"\>", 
+   ",", "\<\"meanXtabs3\"\>", ",", "\<\"meanXtarg3\"\>", 
+   ",", "\<\"meanXabs3\"\>", ",", "\<\"meanXarg3\"\>", 
+   ",", "\<\"stderrXinitabs3\"\>", ",", "\<\"stderrXinitarg3\"\>", 
+   ",", "\<\"stderrXtabs3\"\>", ",", "\<\"stderrXtarg3\"\>", 
+   ",", "\<\"stderrXabs3\"\>", ",", "\<\"stderrXarg3\"\>"}], "}"}]], "Output",\
+
+ CellChangeTimes->{3.5606450137066507`*^9, 3.56064516805436*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"ListLinePlot", "[", 
+  RowBox[{"Transpose", "[", 
+   RowBox[{"{", 
+    RowBox[{"t1", ",", "meanchange1"}], "}"}], "]"}], "]"}]], "Input",
+ CellChangeTimes->{{3.560645020239224*^9, 3.5606451079408903`*^9}, {
+  3.5606451982181473`*^9, 3.56064520476714*^9}}],
+
+Cell[BoxData[
+ GraphicsBox[{{}, {}, 
+   {Hue[0.67, 0.6, 0.6], LineBox[CompressedData["
+1:eJw9099LU2Ecx/FHXT/ULK1/oEAiIiv6Rd9uOhf9ATNGF1GRYjUs8qaL6iJO
+UBHRhRcKpRXDfqkQQdSFBiZzTTuYbdO02aC5aiwz0bLyV5rn8/3ogbHz5nnO
+63nOzs6G8qqDJ7KNMRULH/e77rZ7NO1fODXe+1HRbkGbunbZvdM9OrStdqnH
++Bvt6neShZOIdmNYdmF+r/aD9+I/6R79nN8qd3B9nD0okW73SPD6IcnGSVL7
+Rprzh7QrWmQP/M/aT6K8/gvaftYllVgvjbZq+8WDiRkdr3TkHrxv6EAmKHvh
+fdf5pS0SgzeifTQhZ+CN6nr+QcnByRjXy3B9bVPYwf2OaweaeP8/tdcH+fv8
+0va2Cb7NhPZwUsB1s69+lFvwfi/9vhXw/uj+rHHZDu+v9qmYzM67B7s0Ll3w
+JrmeT2rgTWlXZuQ4vGm9nwM/ZAu8Ge2zYZmEN8P7b5YQvFlt3yephvdP2wnK
+EXhzvN+EbII3z/9PRCbgzS89/zLMN5bOb5BO+Gxvn5Tg+iztoMP9s5tHZRqc
+tlUbpZet442X6Wk3Pu6RrfBy0F7rFT1tO+XQY4++pefR7knS0zYXO+kt0/ZE
+6LFNiB479IHecm3rNT22Haa3gtfX0GPfjdFjl/TRW6nta6WnHemK0st123bs
+NL1cvZ+GHnraZt8jennc30N6eUvPQ7187i9Oj30lQY/tW3y+q+jV0mObC/QK
+dD9zKXraxknRYxf30lutLQl62lZVnN4atP90hh46sMO/+Hx13NQ9lW2YX6hd
+8FLK4Wtb58d4Pccj9RLGeuyF/4++H4v9QjbDK6KflGPw2H0DfF/Yw8MShMcu
+ivH9YNdEZSO8tdplCTkMT9uaispNeBz3hqQNHsfzn8sYPG37kiPF8Nbp/EBc
+DsHTts99levw2J6UtMLj/EynjMBj29fkP9TUKuY=
+     "]]}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->True,
+  AxesOrigin->{0, 0},
+  PlotRange->{{0., 4.999999999999982}, {0., 1.3608620987040209`*^-29}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{
+    Scaled[0.02], 
+    Scaled[0.02]}]], "Output",
+ CellChangeTimes->{3.560645205245916*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"ListLinePlot", "[", 
+  RowBox[{"Transpose", "[", 
+   RowBox[{"{", 
+    RowBox[{"t2", ",", "meanNtot2"}], "}"}], "]"}], "]"}]], "Input",
+ CellChangeTimes->{{3.560645020239224*^9, 3.560645032814642*^9}}],
+
+Cell[BoxData[
+ GraphicsBox[{{}, {}, 
+   {Hue[0.67, 0.6, 0.6], LineBox[CompressedData["
+1:eJxN01lIVFEcx/G5M/eOTjrOFvlQPUhhIpWGGknL/29JBilmG2GhLbZLSUYL
+GJMpFS1ooJQVEvmQPkiWUlTSNK0aQ0pGCyWt2GY1k5amU1P318M5fxiGL3PO
+59w7cGJWb1241mgwGAr+ffTvkzX6NNCMbNe/8tP/vkJFtbHolCR9btHRL6no
+U/i9nbwzstCKQZ9OCh1eiU7G+i5Kfl6M3rBOn8dUFH8AfRr7n9GR3SfRnT59
+XpC3rRFthPeKQtFeaf1rSlr/CD0V/ltacOm9tP8dlWvD6E04r4e8i6MUvVV4
+H+h3XQy6Ft5HmtKXjJ4G7zNlz56Hfgivl8qPLUcXwvtKnldb0CZ4fgom7FPE
++X5KdFcr4nkDlPWgXhHv/53KxrYq4v/pI09hBxqcoZ+C196gwfn6KTHiJ/oE
+vB+UnWsx6l0A7yeVN4xBJ8IbIM9gAjoY0meAghlz0G3wBmnK8aXoKni/KLtn
+I3olvCEqS9mDnghvmDzllehBeMPU31WHvg0vSInjLqMr4f2mzG330Svg/aFS
+bzc6Dl6IPPYAuh9eiPryVZPeq7DewPbz0eh78A2c/icePQn7FS7NmmUSz69w
+6+kc9BA4hQOfCyTPyLbpuyTPyOmHDqMnwzPx3me1kmfi1riLkmfiwM47kqey
+7d5TyVM5fVSv5GnsXhuSPI1bW5yq8DT2m2JV4ZnZuihVFZ6Z085mqsILY3cg
+XxVeGLdwseSFsb9iv+SFs/VljeSF85zJjZJnYfeeG5Jn4RZfl+RZ2D/6veSN
+4MjNQ5I3gtOuWjXhRbDbEqMJL4KblyVrwovgznMZmvAiOXIgVxNeJKfN3SJ5
+Vi6pLpU8Kze/q5I8K3ck1UteFKtl1yQvivnhA8mzcUnMG8mz8YWiH5Jn4w5P
+uFnvBKy3s2obg14N386Ul2AW++1c0jgbfRfn2bkpuMQs7oedO+ZvRMfDc7By
+qgSdB8/B9KnCLO6Lg7en1qFvwnNw08FLZnE/HOx70o6OhedkZUI3Oheek2mH
+H30EnpOL75jC9L4Oz8mVI6PRfnhO9q2JR4+H52KleSZ6KTwXzzTmoA/Cc3Fx
+TgH6KjwXV57Zie6F5+Lb3w6h/wJ/HpWF
+     "]]}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->True,
+  AxesOrigin->{0, 0.999999999},
+  PlotRange->{{0., 4.999999999999982}, {0.999999999, 1.0000000280988255`}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{
+    Scaled[0.02], 
+    Scaled[0.02]}]], "Output",
+ CellChangeTimes->{3.560645033250472*^9, 3.560645174015789*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"ListLinePlot", "[", 
+  RowBox[{"Transpose", "[", 
+   RowBox[{"{", 
+    RowBox[{"t2", ",", "meanNNtot2"}], "}"}], "]"}], "]"}]], "Input",
+ CellChangeTimes->{{3.560645020239224*^9, 3.560645040967226*^9}}],
+
+Cell[BoxData[
+ GraphicsBox[{{}, {}, 
+   {Hue[0.67, 0.6, 0.6], LineBox[CompressedData["
+1:eJxN01lIVFEcx/G5M/eOTjrOFvlQPUhhIpWGGknL/29JBilmG2GhLbZLSUYL
+GJMpFS1ooJQVEvmQPkiWUlTSNK0aQ0pGCyWt2GY1k5amU1P318M5fxiGL3PO
+59w7cGJWb1241mgwGAr+ffTvkzX6NNCMbNe/8tP/vkJFtbHolCR9btHRL6no
+U/i9nbwzstCKQZ9OCh1eiU7G+i5Kfl6M3rBOn8dUFH8AfRr7n9GR3SfRnT59
+XpC3rRFthPeKQtFeaf1rSlr/CD0V/ltacOm9tP8dlWvD6E04r4e8i6MUvVV4
+H+h3XQy6Ft5HmtKXjJ4G7zNlz56Hfgivl8qPLUcXwvtKnldb0CZ4fgom7FPE
++X5KdFcr4nkDlPWgXhHv/53KxrYq4v/pI09hBxqcoZ+C196gwfn6KTHiJ/oE
+vB+UnWsx6l0A7yeVN4xBJ8IbIM9gAjoY0meAghlz0G3wBmnK8aXoKni/KLtn
+I3olvCEqS9mDnghvmDzllehBeMPU31WHvg0vSInjLqMr4f2mzG330Svg/aFS
+bzc6Dl6IPPYAuh9eiPryVZPeq7DewPbz0eh78A2c/icePQn7FS7NmmUSz69w
+6+kc9BA4hQOfCyTPyLbpuyTPyOmHDqMnwzPx3me1kmfi1riLkmfiwM47kqey
+7d5TyVM5fVSv5GnsXhuSPI1bW5yq8DT2m2JV4ZnZuihVFZ6Z085mqsILY3cg
+XxVeGLdwseSFsb9iv+SFs/VljeSF85zJjZJnYfeeG5Jn4RZfl+RZ2D/6veSN
+4MjNQ5I3gtOuWjXhRbDbEqMJL4KblyVrwovgznMZmvAiOXIgVxNeJKfN3SJ5
+Vi6pLpU8Kze/q5I8K3ck1UteFKtl1yQvivnhA8mzcUnMG8mz8YWiH5Jn4w5P
+uFnvBKy3s2obg14N386Ul2AW++1c0jgbfRfn2bkpuMQs7oedO+ZvRMfDc7By
+qgSdB8/B9KnCLO6Lg7en1qFvwnNw08FLZnE/HOx70o6OhedkZUI3Oheek2mH
+H30EnpOL75jC9L4Oz8mVI6PRfnhO9q2JR4+H52KleSZ6KTwXzzTmoA/Cc3Fx
+TgH6KjwXV57Zie6F5+Lb3w6h/wJ/HpWF
+     "]]}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->True,
+  AxesOrigin->{0, 0.999999999},
+  PlotRange->{{0., 4.999999999999982}, {0.999999999, 1.0000000280988255`}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{
+    Scaled[0.02], 
+    Scaled[0.02]}]], "Output",
+ CellChangeTimes->{3.560645041575837*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"ListLinePlot", "[", 
+  RowBox[{"Transpose", "[", 
+   RowBox[{"{", 
+    RowBox[{"t3", ",", "meanXtabs3"}], "}"}], "]"}], "]"}]], "Input",
+ CellChangeTimes->{{3.560645020239224*^9, 3.560645066840513*^9}}],
+
+Cell[BoxData[
+ GraphicsBox[{{}, {}, 
+   {Hue[0.67, 0.6, 0.6], LineBox[CompressedData["
+1:eJxN01lIVFEcx/G5M/eOTjrOFvlQPUhhIpWGGknL/29JBilmG2GhLbZLSUYL
+GJMpFS1ooJQVEvmQPkiWUlTSNK0aQ0pGCyWt2GY1k5amU1P318M5fxiGL3PO
+59w7cGJWb1241mgwGAr+ffTvkzX6NNCMbNe/8tP/vkJFtbHolCR9btHRL6no
+U/i9nbwzstCKQZ9OCh1eiU7G+i5Kfl6M3rBOn8dUFH8AfRr7n9GR3SfRnT59
+XpC3rRFthPeKQtFeaf1rSlr/CD0V/ltacOm9tP8dlWvD6E04r4e8i6MUvVV4
+H+h3XQy6Ft5HmtKXjJ4G7zNlz56Hfgivl8qPLUcXwvtKnldb0CZ4fgom7FPE
++X5KdFcr4nkDlPWgXhHv/53KxrYq4v/pI09hBxqcoZ+C196gwfn6KTHiJ/oE
+vB+UnWsx6l0A7yeVN4xBJ8IbIM9gAjoY0meAghlz0G3wBmnK8aXoKni/KLtn
+I3olvCEqS9mDnghvmDzllehBeMPU31WHvg0vSInjLqMr4f2mzG330Svg/aFS
+bzc6Dl6IPPYAuh9eiPryVZPeq7DewPbz0eh78A2c/icePQn7FS7NmmUSz69w
+6+kc9BA4hQOfCyTPyLbpuyTPyOmHDqMnwzPx3me1kmfi1riLkmfiwM47kqey
+7d5TyVM5fVSv5GnsXhuSPI1bW5yq8DT2m2JV4ZnZuihVFZ6Z085mqsILY3cg
+XxVeGLdwseSFsb9iv+SFs/VljeSF85zJjZJnYfeeG5Jn4RZfl+RZ2D/6veSN
+4MjNQ5I3gtOuWjXhRbDbEqMJL4KblyVrwovgznMZmvAiOXIgVxNeJKfN3SJ5
+Vi6pLpU8Kze/q5I8K3ck1UteFKtl1yQvivnhA8mzcUnMG8mz8YWiH5Jn4w5P
+uFnvBKy3s2obg14N386Ul2AW++1c0jgbfRfn2bkpuMQs7oedO+ZvRMfDc7By
+qgSdB8/B9KnCLO6Lg7en1qFvwnNw08FLZnE/HOx70o6OhedkZUI3Oheek2mH
+H30EnpOL75jC9L4Oz8mVI6PRfnhO9q2JR4+H52KleSZ6KTwXzzTmoA/Cc3Fx
+TgH6KjwXV57Zie6F5+Lb3w6h/wJ/HpWF
+     "]]}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->True,
+  AxesOrigin->{0, 0.999999999},
+  PlotRange->{{0., 4.999999999999982}, {0.999999999, 1.0000000280988255`}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{
+    Scaled[0.02], 
+    Scaled[0.02]}]], "Output",
+ CellChangeTimes->{3.560645071122748*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"ListLinePlot", "[", 
+  RowBox[{"Transpose", "[", 
+   RowBox[{"{", 
+    RowBox[{"t3", ",", "meanXinitabs3"}], "}"}], "]"}], "]"}]], "Input",
+ CellChangeTimes->{{3.560645020239224*^9, 3.560645086540827*^9}}],
+
+Cell[BoxData[
+ GraphicsBox[{{}, {}, 
+   {Hue[0.67, 0.6, 0.6], LineBox[CompressedData["
+1:eJxd00srhFEcx/FnbuZmzOAVKElyK5fsxmuwsJDENCQpb8PCwsLCLXsvgYUF
+cqlZTJRSFkQiE4PBGPfn9+T3r9+p6Tzf5pzPeWbqNGRmBsb9juNk/z7uvLzk
+jvX0D8ZD2usNdk+XO3bYK/j+kO1z3JFnd2P9MXtywh0n7FXsP2Xnc+44Y/vh
+ncv6C3Yv/EvZf8WewnnX7CC8G/YavFt2H7w79hG8Ansa3j07AK8o51t77/so
+v/9J/p9nNjinxAaXs16E98LOwntld8J7Y39itj6AV2YvwHtnj8KrsFvhfbDL
+mK134X2y5+F9sYfhfbOb4f2wS94Dewzrnf7/3odv3Yb9Prb3/tYVzNae5xfP
+uh1eQLyAeAHxguIFxQuJFxIvJF6VeFXihcULixcWLyJeRLyoeFHxouLFxIuJ
+FxcvLl5cvGrxqsVLiJcQLyFejXg14iXFS4pn3YH1KXYGfkr2W+/hPGvvfli3
+wKtlj8Cz9u6L9TY8a+9+WDfBq2MPwbOeg2e9Bc+6iNm6EV49exCe9Sw86014
+1gXM1r95m1S+
+     "]]}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->True,
+  AxesOrigin->{0, 0},
+  PlotRange->{{0., 4.999999999999982}, {0., 1.9999999999999998`}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{
+    Scaled[0.02], 
+    Scaled[0.02]}]], "Output",
+ CellChangeTimes->{3.560645087273897*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"ListLinePlot", "[", 
+  RowBox[{"Transpose", "[", 
+   RowBox[{"{", 
+    RowBox[{"t3", ",", "meanXabs3"}], "}"}], "]"}], "]"}]], "Input",
+ CellChangeTimes->{{3.560645020239224*^9, 3.560645096330357*^9}}],
+
+Cell[BoxData[
+ GraphicsBox[{{}, {}, 
+   {Hue[0.67, 0.6, 0.6], LineBox[CompressedData["
+1:eJxN03tMjXEcx/Fznuckp3Q6FzTDWlhLUlllGuv7ncuwClllc62U3IYxU7Nm
+mtGUKeRSLQxTo1F/5NbcU2KExprLXJMJ53BKKuL5+OP5frezs/fO7/f6Pc/Z
+fgFp6+dnKAaDIf3fR/suOaJNJR0/bf5XTvrfl2jSXAc6KkKbW/SoawS6FL/f
+pczyQLTRoE0z/Z4Rjo7E+ie090s0euUKbZ5SVPE0dBn2t9K1KfHo5vvavKAF
+75PRCrzX5MpPEevf0MGI1eiJ8N/R2OebxP739CA3B70a57XRmuBdaBO8dnI/
+KkSXw/tEpdkl6EnwPlNEwEn0Y3gd1NxYhV4L7yut3HABrcJzUoffDXG+kw5f
+axLP66KQzBbx/t/pnuWV+H9+UEbtRzQ4g5u+LHGhwd13U55HL/owvE4KrTIZ
+tU6H10W1iRZ0OLyflNnnh+7r1+YnOU8EoBvhddO+2HHoA/B+kf+PSHQKvB5q
+KYlBh8DrpYyps9Dd8HrJ/SkBfRteH+UVLUIXwvtN4dEZ6MXw/tDV1+vQQfD6
+KSkvC+2G109dYbnoVKw3cNGzfHQDfAP7bytGj8d+IzcGHhXPb+TYBxXoHnBG
+7ttcIzyFC0bWCU9h//p6dCg8lRvWPhSeyqmDW4Wncu+Vt8Izce7yDuGZOMS7
+S3geXFfTLzwPXrbQrOieB7cbHYruDeCiyhGK7g1g/4RARfc8ua47TNE9T557
+LFp4ntwzc5rwBvLeb3HCG8jjDyULz8zVMSnCM/O8tlXCM/PXPZuE58V7onKE
+58XDX+4Unjff2VEoPG+OCykRnjd/eHJCeIN419Yq4Q3iUaMvCM+Hq5uuC8+H
+52xsEp4Ptw9rEZ6Fc268FJ6Fh676KDxfPmt1Cc+XYy/2CM+XnctMqtZhWG/l
+XE8LOg2+la3n/FR9v5XrkgPQd3CeleP/BKv6/bDyt1OR6GB4Ns6Oj0EvhWfj
+UZ0zVf2+2LiyLAF9E56NZ09fpOr3w8auz+noQHh2zt6/Dr0Qnp2HTM5CF8Cz
+8/m329FX4dk5cXc+2gnPzq4Jxegx8Bxc0FqOTobnYN/tFeg8eA4+E1SDvgzP
+wUnNV9Ad8BzcvqUe/Rdvkplq
+     "]]}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->True,
+  AxesOrigin->{0, 0.9999999995000001},
+  PlotRange->{{0., 4.999999999999982}, {0.9999999995000001, 
+   1.000000014049414}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{
+    Scaled[0.02], 
+    Scaled[0.02]}]], "Output",
+ CellChangeTimes->{3.5606450972491207`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"ListLinePlot", "[", 
+  RowBox[{"Transpose", "[", 
+   RowBox[{"{", 
+    RowBox[{"t3", ",", "meanXarg3"}], "}"}], "]"}], "]"}]], "Input",
+ CellChangeTimes->{{3.560645020239224*^9, 3.5606451079408903`*^9}}],
+
+Cell[BoxData[
+ GraphicsBox[{{}, {}, 
+   {Hue[0.67, 0.6, 0.6], LineBox[CompressedData["
+1:eJwt03lQVWUUAPC3b2wP3iBK0YSQKIobZAjmOX8wKuOSqdHwNBCCSEXIZZCt
+ptTUcRQdYWSRMlFi1MlEAoTEd5VdaQLEkqbcQApZHzz2B697z/3OzJ0733zn
+/M757tzPMzpxS6xMIpHE8I/wzssV4ip4LZucbkuuAHFdAQc9hHUjvOsvRDWs
+Pp5296L7I7hA+43QMDLB77eDVCJEM9Qak9/X/fkMAij/EdQZhfwO+PwzIf6A
+DUeCIipDuyCf6tuh5Uehvhuam4T4G/bX3v5uoKgXZOQ9B+2zQ7w3wPJfQF/K
+hQSXI2ZYQX4H1EkFf5jVd0LQcaOj3y0L7KZ+XeCrE/qNgoK8/+DSyTk31r4Y
+g+/J64YCjdB/AgLJ64GFR59sjNZPQSt5vRAwXc7PY4V48vrhwYHsvnSYATl5
+gzD4bxI/n431H4TGRdfr1pdLUJzXDBGdefy8UhTPPwSVeSdntW+Sofh9hqH9
+g1R+fjkSJ7HAbTk/eZcciWuyQERZOH8eBeaQNwKNcaFlw18qMYa8UTC7reTP
+p8Kl5I1BZ9181TeuarTahBiDrIOz+fOqsYG8cbD31IQ5/qTBLPIm4PXps9c8
+H2q4neRNQn/HD7LtNjW3iLwpWBBcbMzyV3Pj5E1BYea9W7/Fqbga8qxg7GvR
+qfOV3FnypmHTupfR2KzgdpA3A6lXhipTFApuPnk2eC2VG0oC5ZyFPBvk7jTs
+6Y2XcVGUL8Fkzqv6nUtSrp58CeZ6BrwR+VjC+VG9FEeOhBzI0Uo4cX4pev9+
+9fzltBnTJHFSfJjzYM2sTqtJ9GRojukZPbFhyiR6Mjzrb1809cuEaTF5cixU
++H2c4DFuEj05vvdko/rFt6PMk+PqGwnlW/stzFPgnWNn4urChpmnwKqom24r
+TWbmKXEutNRf9xlknhIXrO4cWPV2H/OUOCybt3muuZt5Kixqirupvt/FPBVG
+Xriq7zvXwTw19iT0fNH66XPmqdGWYSxI3PUX89Q4E/o0OsiujXkavOhRs0Zn
+fMg8DR5Oyj4DwVXM02JJw4rT2wwZzNPizfzQ+N1lpSB6WowZebP0YnY9iJ4O
+04/q3JW+rSB6Otx09Fh40IknIHp2uDhVlpvY9RREzw69/CF+S8FL5tmhn/e0
+3d6WV8yzx436X68fl3Qzzx6/GkteX7Ckl3kOWNK+oudOxADzHDBte2ptzxoz
+8xzw2tpw15SnQ8xzxNhlgbGqJAvzHPHSbLfSTIdR5jlh3PSIwrNwjHlOWPys
+bduNVRPMc8LDppIrwW2TsITy9fhP/jlLwx4rRJOvx/pD+0LC5DOsXo8+mzdn
+deTZoI766VGX6bY/MFeC4v3QY7VV5W6LkaIvec4YEjt6r3apDCPIc8bTTa92
+nbLy/yF5zpix/LHz1gY53ifPGT/KrqmYk6VA8X4446vJkqjnkUqcR54LLv/k
+srZooQqN5Llg6N1zxXvHVHiKPBf0eutweEC1Gu+S54JV6fukUxkaHCTPBV2/
+9rEFdGs4b/IMOOAVyP//Gi6MPANqGtf9XPShmjtBngF3JIbz90HFVZJnwKFZ
+uyPdK5VcL3kGvGdK5e+HgvsfVEwU1A==
+     "]]}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->True,
+  AxesOrigin->{0, 0},
+  PlotRange->{{0., 4.999999999999982}, {-3.113870614426569, 
+   3.0845000001173783`}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{
+    Scaled[0.02], 
+    Scaled[0.02]}]], "Output",
+ CellChangeTimes->{3.5606451083610163`*^9}]
+}, Open  ]]
+},
+WindowSize->{740, 867},
+WindowMargins->{{12, Automatic}, {Automatic, 24}},
+FrontEndVersion->"8.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (October 5, \
+2011)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[579, 22, 2004, 37, 404, "Input"],
+Cell[2586, 61, 725, 13, 58, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[3348, 79, 279, 6, 27, "Input"],
+Cell[3630, 87, 1366, 28, 221, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[5033, 120, 225, 5, 27, "Input"],
+Cell[5261, 127, 1577, 31, 247, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[6875, 163, 226, 5, 27, "Input"],
+Cell[7104, 170, 1555, 31, 247, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[8696, 206, 226, 5, 27, "Input"],
+Cell[8925, 213, 1555, 31, 247, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[10517, 249, 229, 5, 27, "Input"],
+Cell[10749, 256, 967, 22, 243, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[11753, 283, 225, 5, 27, "Input"],
+Cell[11981, 290, 1565, 32, 247, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[13583, 327, 227, 5, 27, "Input"],
+Cell[13813, 334, 2046, 40, 234, "Output"]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
+
