@@ -43,8 +43,12 @@
     <initialisation>
       <dependencies>initialPhaseNoise</dependencies>
       <![CDATA[
-      q00 = 1.0+qv*vnce;
-      q01 = cos(M_PI*phs) + i*sin(M_PI*phs);
+      if (phs < 0.5)
+        q00 = sqrt((1+b/s)/(g0+f));
+      else
+        q00 = sqrt((1-b/s)/(g0+f));
+      q01 = q00*(cos(M_PI*phs) + i*sin(M_PI*phs));
+      q00 += qv*vnce;
       ]]>
     </initialisation>
   </vector>
@@ -84,26 +88,12 @@
   </computed_vector>
 
   <sequence>
-
-      <breakpoint filename="initial.xsil">
-      	<dependencies>initialState</dependencies>
-      </breakpoint>
-	
-    <filter>
-     <dependencies>meanFields initialState normalisation</dependencies>
-     <![CDATA[
-       q00 /= sqrt(N);
-       q01 /=sqrt(N);
-       q0 /= sqrt(N);
-       q1 /=sqrt(N);
-     ]]>
-    </filter>
  
       <breakpoint filename="normalised.xsil">
       	<dependencies>initialState</dependencies>
       </breakpoint>
        
-    <integrate algorithm="ARK45" interval="5.0" tolerance="1e-7">
+    <integrate algorithm="ARK45" interval="25.0" tolerance="1e-7">
       <samples>100 100 100</samples>
       <operators>
         <integration_vectors>meanFields</integration_vectors>
@@ -119,6 +109,10 @@
         ]]>
       </operators>
     </integrate>
+    
+    <breakpoint filename="state.xsil">
+      	<dependencies>meanFields</dependencies>
+    </breakpoint>
   </sequence>
   
   <output>
@@ -126,7 +120,7 @@
       <moments>change</moments>
       <dependencies>meanFields initialState iprod</dependencies>
       <![CDATA[
-        change = mod2(q0-X*q00) + mod2(q1-X*q01);
+        change = mod2(Xt*q0-X*q00) + mod2(Xt*q1-X*q01);
       ]]>
     </sampling_group>
     

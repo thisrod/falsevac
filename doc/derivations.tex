@@ -1,15 +1,86 @@
+% xetex derivations && open derivations.pdf
+
 \input xpmath
 \input a4
 
-% xetex derivations && open derivations.pdf
+\centerline{Simulating the false vacuum with cold bosons}
+\vskip 7mm
+\centerline{Rodney E. S. Polkinghorne, Swinburne University of Technology}
+\vskip 10mm
 
 The Gross-Pitaevskii equations from Sascha's paper are 
 $$i\hbar ∂₀ψ=\biggl(-{\hbar²\over 2m}∂_{11}-μ+g'|ψ|²+g_c|\bar ψ|²\bigg)ψ-ν\bar ψ,$$ where $ψ=(ψ⁰,ψ¹)$, and $\bar ψ=(ψ¹,ψ⁰)$, and absolute values are taken elementally.  Of the parameters, only $g'$ is a vector: $μ$, $g_c$ and $ν$ are scalars.  Only $ν$ depends on time, as $ν=ν₀+αω\cos(ωt)$.
+
+\beginsection{Literature review}
+
+At the start of our journey of discovery, the terrain has been trampled by field theorists, several armies of mathematicians, Landau, Lifshitz, and assorted sightseers.  These hordes have left many tracks: some offer us essential shortcuts, many end in chaos.  Hence the map below.  Top left is most realistic, bottom right is most approximate.  Left is quantum, right is classical or mean-field.  Down is other kinds of approximation, labeled in bold and explained below.
+
+\vskip 10mm
+\centerline{\XeTeXpdffile "approx-1.pdf"}
+\vskip 10mm
+
+Experiment is, of course, the most realistic.  We 
+
+Top left is exact, bottom right most approximate.  Approximation~1 discards losses, the shape of the trap and other experimental nuisances, and imposes periodic boundary conditions.  Approximation~2 is that the amplitudes of the two fields are almost constant, and slaved to the difference between their phases.  Approximation~3 makes the extent of the field small enough that it can be treated as a point.
+
+The crosses give the static limit below, the adiabatic limit above, and the linear limit to the right.  Blank corners are where the adiabatic limit is the same as the static one.  Question marks indicate cases that someone must surely have studied, but I don't know who it was.
+
+Italics indicate cases that can be solved exactly, in the static or adiabatic limits.  It does not follow that driven systems between these limits can be solved exactly: there lies chaos!  Dashed lines show where chaos is expected.
+
+The set of parameters of the static system is listed next to each box.  The corresponding modulated system has two extra parameters, a modulation depth and frequency.  The Kaptiza theory suggests that only their product should matter in the limit of fast modulation.
+
+In principle, the extent of the fields is an extra parameter.  I'm assuming they are large enough that it doesn't matter.
+
+We're thinking about two pencils of condensed Bose gas, between which particles can tunnel.  People have been interested in this largely because, in the limit of nearly-uniform density, it should reduce to a sine-Gordon field, one of the sexiest topics around.
+
+In the classical limit, a sine-Gordon field obeys the sine-Gordon equation, $$(∂_{00}-∂_{11})Φ=\sin φ.$$  This represents a very simple mechanical model: it is the continuous limit of a line of pendula connected by a torsional string.  The equation was of great interest when solitions were in fashion; it was solved exactly by Ablowitz et al.\ in 1973.
+
+The corresponding quantum field theory is also of great interest, because it is exactly soluble, and relativistic.  This is hard-core relativistic field theory, which I don't know very much about.  The critical paper is Coleman in 1975, who showed it is equivalent to the Thirring model.  These models were both solved around the early 80's, using the Bete ansatz.  The solutions are taught in textooks, which Swinburne of course does not have.
+
+Note that the quantum field theory has a meaningful parameter.  It's roughly the angular momentum kick that will get a downward-pointing pendulum to point upwards, in units of $\hbar$.  The classical sine-Gordon equation is parameterless.
+
+We want to stabilise the upward equilibrium point by Kaptiza modulation.  This is more thoroughly trampled ground—it's a running exercise in Landau \& Lifshitz, and the chaos theorists discovered it around 1980.
+
+The effect of Kaptiza modulation, in the adiabatic limit, is to add a term proportional to $\sin 2φ$ to the sine-Gordon equation.  One would think that, of the ten-thousand or so field theorists who've written about quantum sine-Gordon, at least one might have considered this.  Perhaps I should look at the intersection of citations from Coleman's sine-Gordon paper, and his false vacuum paper.
+
+
+\beginsection{Analytical mechanics}
+
+We aim to test various hypotheses about the dynamics of this system.  These hypotheses relate to a simple mechanical model, sine-Gordon, which is equivalent to the tunnelling atoms in some limit.  The classical version is very easy to visualise, and was solved by Ablowitz et.\ al in 1973.  The quantum version is exactly soluble, so we can rigorously test the truncation error in truncated Wigner, in at least one quantum limit.  The model is expressed in terms of generalised co-ordinates, so it is convenient to refer the different representations to a common Lagrangian.
+
+The Euler-Lagrange equations for a field are derivied in Section~13.2 of Goldstein.  The field Lagrangian, for the two-component BEC, has the form $${\cal L}(t, x, ψ⁰, ψ¹, {\dot ψ}⁰, {\dot ψ}¹, {ψ⁰}', {ψ¹}'),$$ where, for the solution $${\dot ψ}(t,x) = ∂₀ψ(t,x) \quad {\rm and} \quad ψ'(t,x) = ∂₁ψ(t,x).$$  For fields, the roles of position and time a symmetric.  The Euler-Lagrange equations are then $$ foo $$
+
+\beginsection{Preliminaries}
 
 Transforming to dimensionless coordinates, $$ψ(t,x)=q\bigl(ωt, \sqrt{mμ}x/\hbar\bigr)=q(τ,χ),$$ gives 
 $$i\hbar ω∂₀q=\bigl(-½μ∂_{11}-μ+g'|q|²+g_c|\bar q|²\bigr)q-ν\bar q,$$ or
 $$∂₀q=is\bigl(½∂_{11}+1-g|q|²-f|\bar q|²\bigr)q+i(b+a\cos\tau)\bar q,$$ where $$s=μ/\hbar ω\qquad g=g'/μ\qquad f=g_c/μ\qquad b=ν₀/\hbar ω\qquad a=α/\hbar.$$  As stated, $q$ has dimensions ${\rm m}^{-½}$; fixing that will change the values and dimensions of $g$ and $f$, but not the form of the equation.
 
+The inital amplitude of $q$ is set consistently with the chemical potential, so that a flat field is a steady state, with $q⁰=q$ and $q¹=cqe^{iφ}$:
+$$\bigl(gq²+fc²q²-1\bigr)=(b/s)ce^{iφ},$$
+$$\bigl(gc²q²+fq²-1\bigr)c=(b/s)e^{-iφ}.$$
+The only stationary solutions occur with $φ=0,π$ and $c=1$, whence
+$$q=\sqrt{1±b/s\over g+f}.$$
+The plus sign applies to $φ=0$, the minus sign to $φ=π$.
 
+\beginsection{Scales}
+
+There are three quantities to scale in this problem: length, time, and the ampltiude of $ψ$.
+
+One set of length and time scales come from the sine-Gordon equation.  This involves a speed of sound, and a natural frequency for the coupled pendula; physically, this is a Rabi frequency for the tunneling.  These scales make the most sense for computing dynamics and stability: if the system is unstable, it is likely to escape on a time around the pendulum period.
+
+The other length scales come from statics.  But these should be captured by the sine-Gordon equation.  I expect the healing length is the speed of sound divided by the Rabi frequency, to a factor of $π$ or something.
+
+The field amplitude is, in principle, determined by the chemical potential $μ$.  For the Gross-Pitaevskii equations to be truly stationary, $μ$, the tunneling rate $ν$, and the repulsion $g|ψ|²$ must satisfy some constraint.  However, changing $μ$ multiplies $ψ$ by a global phase $e^{iμt}$; in simulations, $μ$ will be adjusted so this global phase rotates as slowly as possible.
+
+We will consider fields that are largely homogeneous.  The amplitude of the homogeneous part can then be scaled so that $|ψ⁰|²+|ψ¹|²=1$; the only change in the equations for $g$ to be multiplied by the particle density.  This combines $N$ and $g$, eliminating one parameter.  Length could be scaled consistently, so that $|ψ|²\,dx$ was still the number of particles in the interval $dx$.  However, it would make more sense to use an unusual normalisation, to give the sine-Gordon equation the above form.
+
+\beginsection{Dynamic stabilisation}
+
+The pendulum with vertically vibrating support was solved by P.~L.~Kapitza in 1951.  The solution is most accessible as a running exercise in Landau \& Lifshitz; the means to solve it are developed in \S 30, and the solution occurs as Problem~1 on Page~95.
+
+\beginsection{Questions}
+
+In the usual derivation of the Euler-Lagrange equations for a field, it is assume that the variation of the field is zero at its edges.  How do periodic boundary conditions work?
 
 \bye
