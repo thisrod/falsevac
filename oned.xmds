@@ -4,7 +4,7 @@
 
   <author>Rodney Polkinghorne</author>
   <description>
-    Gross-Pitaevskii equations for the dynamically stabilised false vacuum, in one dimension.
+    Gross-Pitaevskii equations for the dynamically stabilised false vacuum, in one dimension.  See derivations.tex for the meanings of the parameters; I've used the Plan 9 keyboard mapping from greek letters to roman ones.
   </description>
 
   <features>
@@ -13,14 +13,12 @@
     <fftw plan="patient" />
     <auto_vectorise />
     <arguments>
-        <argument name="qv" type="real" default_value="0.1" />
-        <argument name="phs" type="real" default_value="1.0" />
-        <argument name="s" type="real" default_value="1" />
-        <argument name="g0" type="real" default_value="0.1" />
-        <argument name="g1" type="real" default_value="0.1" />
-        <argument name="f" type="real" default_value="0.1" />
-        <argument name="b" type="real" default_value="1" />
-        <argument name="a" type="real" default_value="0.001" />
+        <argument name="dF" type="real" default_value="0.1" />
+        <argument name="F" type="real" default_value="-1.0" />
+        <argument name="L" type="real" default_value="1" />
+        <argument name="U" type="real" default_value="0.1" />
+        <argument name="Y" type="real" default_value="0.1" />
+        <argument name="W" type="real" default_value="0.1" />
      </arguments>
    </features>
 
@@ -34,8 +32,8 @@
   <driver name="multi-path" paths="1" />
 
   <noise_vector name="initialPhaseNoise" dimensions="space" kind="Gaussian" 
-      type="complex">
-    <components>vnce</components>
+      type="real">
+    <components>nrml</components>
   </noise_vector>
 
   <vector name="initialState" type="complex" dimensions="space">
@@ -43,12 +41,9 @@
     <initialisation>
       <dependencies>initialPhaseNoise</dependencies>
       <![CDATA[
-      if (phs < 0.5)
-        q00 = sqrt((1+b/s)/(g0+f));
-      else
-        q00 = sqrt((1-b/s)/(g0+f));
-      q01 = q00*(cos(M_PI*phs) + i*sin(M_PI*phs));
-      q00 += qv*vnce;
+      q00 = U/sqrt(2.0);
+      q01 = F*q00;
+      q00 *= cos(M_PI*dF*nrml) + i*sin(M_PI*dF*nrml);
       ]]>
     </initialisation>
   </vector>
@@ -65,33 +60,27 @@
   </vector>
   
   <computed_vector name="normalisation" dimensions="" type="real">
-    <components> N NN </components>
+    <components> N</components>
     <evaluation>
       <dependencies>meanFields</dependencies>
       <![CDATA[
         N = mod2(q0) + mod2(q1);
-        NN = abs(conj(q0)*q0 + conj(q1)*q1);
       ]]>
     </evaluation>
   </computed_vector>
   
   <computed_vector name="iprod" dimensions="" type="complex">
-    <components>Xinit Xt X </components>
+    <components>X Xt</components>
     <evaluation>
       <dependencies>meanFields initialState</dependencies>
       <![CDATA[
         X = conj(q00)*q0 + conj(q01)*q1;
-        Xinit = conj(q00)*q00 + conj(q01)*q01;
         Xt = conj(q0)*q0 + conj(q1)*q1;
-      ]]>
+     ]]>
     </evaluation>
   </computed_vector>
 
   <sequence>
- 
-      <breakpoint filename="normalised.xsil">
-      	<dependencies>initialState</dependencies>
-      </breakpoint>
        
     <integrate algorithm="ARK45" interval="25.0" tolerance="1e-7">
       <samples>100 100 100</samples>
@@ -100,12 +89,14 @@
         <operator kind="ex" constant="yes">
           <operator_names>L11</operator_names>
           <![CDATA[
-            L11 = -i*s*kspace*kspace*0.5;
+            L11 = -(i/L)*kspace*kspace*0.5;
           ]]>
         </operator>
         <![CDATA[
-        dq0_dt = L11[q0] + i*s*(1-g0*mod2(q0)-f*mod2(q1))*q0 + i*(b+a*cos(t))*q1;
-        dq1_dt = L11[q1] + i*s*(1-g1*mod2(q1)-f*mod2(q0))*q1 + i*(b+a*cos(t))*q0;
+        dq0_dt = L11[q0] - i*L*mod2(q0)/(U*U) + 0.5*i*(L-1/L)*q0 +
+            (i/2/L)*(1+sqrt(2)*Y*W*cos(W*t))*q1;
+         dq1_dt = L11[q1] - i*L*mod2(q1)/(U*U) + 0.5*i*(L-1/L)*q1 +
+            (i/2/L)*(1+sqrt(2)*Y*W*cos(W*t))*q0;
         ]]>
       </operators>
     </integrate>
@@ -116,7 +107,7 @@
   </sequence>
   
   <output>
-    <sampling_group basis="space(0)" initial_sample="no">
+    <sampling_group basis="space(0)" initial_sample="yes">
       <moments>change</moments>
       <dependencies>meanFields initialState iprod</dependencies>
       <![CDATA[
@@ -124,25 +115,20 @@
       ]]>
     </sampling_group>
     
-    <sampling_group basis="" initial_sample="no">
-      <moments>Ntot NNtot</moments>
+    <sampling_group basis="" initial_sample="yes">
+      <moments>Ntot</moments>
       <dependencies>normalisation</dependencies>
       <![CDATA[
         Ntot = N;
-        NNtot = NN;
       ]]>
     </sampling_group>
     
-    <sampling_group basis="" initial_sample="no">
-      <moments>Xinitabs  Xinitarg Xtabs  Xtarg Xabs  Xarg</moments>
+    <sampling_group basis="" initial_sample="yes">
+      <moments>Xabs  Xarg</moments>
       <dependencies>iprod</dependencies>
       <![CDATA[
         Xabs = abs(X);
         Xarg = arg(X);
-        Xtabs = abs(Xt);
-        Xtarg = arg(Xt);
-        Xinitabs = abs(Xinit);
-        Xinitarg = arg(Xinit);
       ]]>
     </sampling_group>
   </output>
