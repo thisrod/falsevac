@@ -3,5 +3,6 @@
 *.h5
 *.log
 *.pdf
+*.mpx
 oned
 oned.nb
