@@ -3,13 +3,13 @@
 \input xpmath
 \input a4
 
-\centerline{Simulating the false vacuum with cold bosons}
+\centerline{\bf Simulating the false vacuum with cold bosons}
 \vskip 7mm
 \centerline{Rodney E. S. Polkinghorne, Swinburne University of Technology}
 \vskip 10mm
 
-The Gross-Pitaevskii equations from Sascha's paper are 
-$$i\hbar ∂₀ψ=\biggl(-{\hbar²\over 2m}∂_{11}-μ+g'|ψ|²+g_c|\bar ψ|²\bigg)ψ-ν\bar ψ,$$ where $ψ=(ψ⁰,ψ¹)$, and $\bar ψ=(ψ¹,ψ⁰)$, and absolute values are taken elementally.  Of the parameters, only $g'$ is a vector: $μ$, $g_c$ and $ν$ are scalars.  Only $ν$ depends on time, as $ν=ν₀+αω\cos(ωt)$.
+The Gross-Pitaevskii equations from Sascha's notes are 
+$$i\hbar ∂₀ψ=\biggl(-{\hbar²\over 2m}∂_{11}-μ+g'|ψ|²+g_c|\bar ψ|²\bigg)ψ-ν\bar ψ,$$ where $ψ=(ψ⁰,ψ¹)$, and $\bar ψ=(ψ¹,ψ⁰)$, and absolute values are taken elementally.  Of the parameters, only $g'$ is a vector: $μ$, $g_c$ and $ν$ are scalars.  Only $ν$ depends on time, as $ν=ν₀+αω\cos(ωt)$.  For simplicity, we'll consider the case where $g⁰=g¹=g$, and $g_c=0$.
 
 \beginsection{Literature review}
 
@@ -19,17 +19,29 @@ At the start of our journey of discovery, the terrain has been trampled by field
 \centerline{\XeTeXpdffile "approx-1.pdf"}
 \vskip 10mm
 
-Experiment is, of course, the most realistic.  We 
+Experiment is, of course, the most realistic.  We expect the predictions of quantum mechanics to agree very well with the results of these tunneling experiments, so I've put it in the “quantum” column.  The most realistic theory is the atomic field theory that we intend to simulate.  Approximation~1 comprises the differences between the quantum field theory and the experiments.  The major ones are that we ignore losses, ignore the trap potential, and impose periodic boundary conditions.  On the right is the mean-field version of this theory, the Gross-Pitaevskii equations.
 
-Top left is exact, bottom right most approximate.  Approximation~1 discards losses, the shape of the trap and other experimental nuisances, and imposes periodic boundary conditions.  Approximation~2 is that the amplitudes of the two fields are almost constant, and slaved to the difference between their phases.  Approximation~3 makes the extent of the field small enough that it can be treated as a point.
+Approximation~2 is that the amplitudes of the two components of the field are almost homogeneous, and the fluctuations are slaved to the difference between their phases.  This gives the sine-Gordon equation for the mean field, and the corresponding field theory in the quantum case.
 
-The crosses give the static limit below, the adiabatic limit above, and the linear limit to the right.  Blank corners are where the adiabatic limit is the same as the static one.  Question marks indicate cases that someone must surely have studied, but I don't know who it was.
+Approximation~3 makes the extent of the field small enough that it can be treated as a point.  This is where the system reduces to a single pendulum.
+
+At level 3, there are several different theories describing each point.  I've divided these vertically by driving, and horizontally by linearisation.  The lower cases are the static ones, where the driving amplitude goes to zero.  This gives a pendulum, which reduces to an oscillator when linearised.  The upper cases are the adiabatic limit, where the driving frequency is much faster than any other timescale.  This is where the Kapitza pendulum lies.  We can model a dynamically stabilised false vacuum by solving the Kapitza potential quantum mechanically; it would be nice to check that this is the adiabatic limit of the driven quantum pendulum.  The adiabatic limit of the driven linear oscillator is the same as the static one, so I've left those corners blank.
+
+So far as I know, the existing theories at level 2 are all in the static limit.  But thousands of papers have been written about sine-Gordon fields, and it seems very likely to me that someone would have studied a $\cos φ + ε\cos 2φ$ potential.  Finding that work will be hard.
 
 Italics indicate cases that can be solved exactly, in the static or adiabatic limits.  It does not follow that driven systems between these limits can be solved exactly: there lies chaos!  Dashed lines show where chaos is expected.
 
-The set of parameters of the static system is listed next to each box.  The corresponding modulated system has two extra parameters, a modulation depth and frequency.  The Kaptiza theory suggests that only their product should matter in the limit of fast modulation.
+For computational purposes, it's important to know what parameters govern the behaviour of each system.  Beneath each static, nonlinear system, I've listed the parameters that can't be removed by scaling.  In general, the linearised system has one less parameter.  The adiabatic system has one extra one, a product of modulation depth and frequency.  In driving at finite frequency, these parameters affect the dynamics independently.  In principle, the extent of the fields is an extra parameter.  I'm assuming they are large enough that it doesn't matter.
 
-In principle, the extent of the fields is an extra parameter.  I'm assuming they are large enough that it doesn't matter.
+The classical pendulum has no meaningful parameters: there is only one set of dyanamics, and only the scale of the phase space changes.  When we quantise it, we get one parameter, which can be understood as follows.  There is a special trajectory, the one that starts and ends with the pendulum at rest pointing upwards.  This trajectory describes an orbit in phase space, whose area is an action, $L₀$.  The ratio of this action to Planck's constant matters.
+
+The sine-Gordon equation is also parameterless.  Space and time can be scaled so that the speed of sound, and the length of a soliton, are both 1.  The quantum case is similar to the quantum pendulum.  Instead of a trajectory where the pendulum does a loop, we have a trajectory where a soliton-antisoliton pair annihilates, then recreates itself with opposite twist.  I don't know precisely what action characterises that process, but there must be one.  This is the parameter of the sine-Gordon field theory.  (According to Peter, the use of two parameters in this theory is for purely historical reasons.)
+
+The Gross-Pitaevskii equations have a parameter, unlike the classical systems at levels 2 and 3 of approximation.  They have to: it's the parameter that determines how well the sine-Gordon approximation holds!  This parameter is something like particle number times repulsion strength divided by tunneling rate; Sascha claims the S-G limit is when the repulsion is much stronger than the tunneling.  There might be other parameters, such as the different repulsions for different species.
+
+The atomic field theory has the $Ng/ν$ parameter, and also solition action parameter of the sine-Gordon field theory.  I don't know how to write this action in terms of $N$, $g$ and $ν$, because I don't fully understand the derivation of the sine-Gordon equation from the G-P equations.
+
+\vfil\break
 
 We're thinking about two pencils of condensed Bose gas, between which particles can tunnel.  People have been interested in this largely because, in the limit of nearly-uniform density, it should reduce to a sine-Gordon field, one of the sexiest topics around.
 
@@ -48,7 +60,11 @@ The effect of Kaptiza modulation, in the adiabatic limit, is to add a term propo
 
 We aim to test various hypotheses about the dynamics of this system.  These hypotheses relate to a simple mechanical model, sine-Gordon, which is equivalent to the tunnelling atoms in some limit.  The classical version is very easy to visualise, and was solved by Ablowitz et.\ al in 1973.  The quantum version is exactly soluble, so we can rigorously test the truncation error in truncated Wigner, in at least one quantum limit.  The model is expressed in terms of generalised co-ordinates, so it is convenient to refer the different representations to a common Lagrangian.
 
-The Euler-Lagrange equations for a field are derivied in Section~13.2 of Goldstein.  The field Lagrangian, for the two-component BEC, has the form $${\cal L}(t, x, ψ⁰, ψ¹, {\dot ψ}⁰, {\dot ψ}¹, {ψ⁰}', {ψ¹}'),$$ where, for the solution $${\dot ψ}(t,x) = ∂₀ψ(t,x) \quad {\rm and} \quad ψ'(t,x) = ∂₁ψ(t,x).$$  For fields, the roles of position and time a symmetric.  The Euler-Lagrange equations are then $$ foo $$
+The Euler-Lagrange equations for a field are derivied in Section~13.2 of Goldstein.  According to Kaurov and Kuklov, the mean-field Lagrangian for the two-component BEC is 
+$${\cal L}(t, x, ψ⁰, ψ¹, {\dot ψ}⁰, {\dot ψ}¹, {ψ⁰}', {ψ¹}')={\cal L}₀+{\cal L}₁+{\cal L}₂,$$
+$${\cal L}₀+{\cal L}₁ =∑_{ψ∈ψ₀,ψ₁}{i\hbar\over 2}(ψ*{\dot ψ}-ψ{\dot ψ}*) - {\hbar²\over 2m}|∂₁ψ|²+μ|ψ|²-{g\over 2}|ψ|⁴,$$
+$${\cal L}₂=γ(ψ₀*ψ₁+ψ₀ψ₁*).$$
+Here, for a candidate solution $ψ(t,x)$, $${\dot ψ}(t,x) = ∂₀ψ(t,x) \quad {\rm and} \quad ψ'(t,x) = ∂₁ψ(t,x).$$  For fields, the roles of position and time a symmetric.  The Euler-Lagrange equations are then $$ foo $$
 
 \beginsection{Preliminaries}
 
