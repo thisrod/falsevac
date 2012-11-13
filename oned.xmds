@@ -15,7 +15,7 @@
     <arguments>
         <argument name="dF" type="real" default_value="0.1" />
         <argument name="F" type="real" default_value="-1.0" />
-        <argument name="L" type="real" default_value="1" />
+        <argument name="L" type="real" default_value="10" />
         <argument name="U" type="real" default_value="0.1" />
         <argument name="Y" type="real" default_value="0.1" />
         <argument name="W" type="real" default_value="0.1" />
@@ -25,7 +25,7 @@
   <geometry>
     <propagation_dimension> t </propagation_dimension>
     <transverse_dimensions>
-      <dimension name="space" lattice="128" domain="(-5,5)" />
+      <dimension name="space" lattice="100" domain="(-5,5)" />
     </transverse_dimensions>
   </geometry>
   
@@ -43,7 +43,7 @@
       <![CDATA[
       q00 = U/sqrt(2.0);
       q01 = F*q00;
-      q00 *= cos(M_PI*dF*nrml) + i*sin(M_PI*dF*nrml);
+      q00 *= cos(dF*nrml) + i*sin(dF*nrml);
       ]]>
     </initialisation>
   </vector>
@@ -69,52 +69,46 @@
     </evaluation>
   </computed_vector>
   
-  <computed_vector name="iprod" dimensions="" type="complex">
-    <components>X Xt</components>
+  <computed_vector name="rphs" dimensions="" type="real">
+    <components>f0 f1</components>
     <evaluation>
-      <dependencies>meanFields initialState</dependencies>
+      <dependencies>meanFields</dependencies>
       <![CDATA[
-        X = conj(q00)*q0 + conj(q01)*q1;
-        Xt = conj(q0)*q0 + conj(q1)*q1;
+        f0 = arg(q0)/10.0;
+        f1 = arg(q1)/10.0;
      ]]>
     </evaluation>
   </computed_vector>
 
   <sequence>
+    
+    <breakpoint filename="state.xsil">
+      	<dependencies>meanFields</dependencies>
+    </breakpoint>
        
-    <integrate algorithm="ARK45" interval="25.0" tolerance="1e-7">
-      <samples>100 100 100</samples>
+    <integrate algorithm="SI" interval="30.0" steps="100000">
+      <samples>1000 100</samples>
       <operators>
         <integration_vectors>meanFields</integration_vectors>
         <operator kind="ex" constant="yes">
           <operator_names>L11</operator_names>
           <![CDATA[
-            L11 = -(i/L)*kspace*kspace*0.5;
+            L11 = (1.0/L)*kspace*kspace;
           ]]>
         </operator>
         <![CDATA[
-        dq0_dt = L11[q0] - i*L*mod2(q0)/(U*U) + 0.5*i*(L-1/L)*q0 +
-            (i/2/L)*(1+sqrt(2)*Y*W*cos(W*t))*q1;
-         dq1_dt = L11[q1] - i*L*mod2(q1)/(U*U) + 0.5*i*(L-1/L)*q1 +
-            (i/2/L)*(1+sqrt(2)*Y*W*cos(W*t))*q0;
-        ]]>
+        dq0_dt = -i*(L11[q0] + 
+            (0.5*L*(2*mod2(q0)/(U*U)-1.0) + 0.5/L)*q0 -
+            (0.5/L)*(1+sqrt(2)*Y*W*cos(W*t))*q1);
+        dq1_dt = -i*(L11[q1] + 
+            (0.5*L*(2*mod2(q1)/(U*U)-1.0) + 0.5/L)*q1 -
+            (0.5/L)*(1+sqrt(2)*Y*W*cos(W*t))*q0);
+       ]]>
       </operators>
     </integrate>
-    
-    <breakpoint filename="state.xsil">
-      	<dependencies>meanFields</dependencies>
-    </breakpoint>
   </sequence>
   
   <output>
-    <sampling_group basis="space(0)" initial_sample="yes">
-      <moments>change</moments>
-      <dependencies>meanFields initialState iprod</dependencies>
-      <![CDATA[
-        change = mod2(Xt*q0-X*q00) + mod2(Xt*q1-X*q01);
-      ]]>
-    </sampling_group>
-    
     <sampling_group basis="" initial_sample="yes">
       <moments>Ntot</moments>
       <dependencies>normalisation</dependencies>
@@ -124,11 +118,11 @@
     </sampling_group>
     
     <sampling_group basis="" initial_sample="yes">
-      <moments>Xabs  Xarg</moments>
-      <dependencies>iprod</dependencies>
+      <moments>ff0 ff1</moments>
+      <dependencies>rphs</dependencies>
       <![CDATA[
-        Xabs = abs(X);
-        Xarg = arg(X);
+        ff0 = f0;
+        ff1 = f1;
       ]]>
     </sampling_group>
   </output>
