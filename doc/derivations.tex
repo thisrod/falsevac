@@ -11,7 +11,7 @@
 The Gross-Pitaevskii equations from Sascha's notes are 
 $$i\hbar ∂₀ψ=\biggl(-{\hbar²\over 2m}∂_{11}-μ+g'|ψ|²+g_c|\bar ψ|²\bigg)ψ-ν\bar ψ,$$ where $ψ=(ψ⁰,ψ¹)$, and $\bar ψ=(ψ¹,ψ⁰)$, and absolute values are taken elementally.  Of the parameters, only $g'$ is a vector: $μ$, $g_c$ and $ν$ are scalars.  Only $ν$ depends on time, as $ν=ν₀+αω\cos(ωt)$.  For simplicity, we'll consider the case where $g⁰=g¹=g$, and $g_c=0$.
 
-\beginsection{Literature review}
+\beginsection{Overreview}
 
 At the start of our journey of discovery, the terrain has been trampled by field theorists, several armies of mathematicians, Landau, Lifshitz, and assorted sightseers.  These hordes have left many tracks: some offer us essential shortcuts, many end in chaos.  Hence the map below.  Top left is most realistic, bottom right is most approximate.  Left is quantum, right is classical or mean-field.  Down is other kinds of approximation, labeled in bold and explained below.
 
@@ -19,7 +19,7 @@ At the start of our journey of discovery, the terrain has been trampled by field
 \centerline{\XeTeXpdffile "approx-1.pdf"}
 \vskip 10mm
 
-Experiment is, of course, the most realistic.  We expect the predictions of quantum mechanics to agree very well with the results of these tunneling experiments, so I've put it in the “quantum” column.  The most realistic theory is the atomic field theory that we intend to simulate.  Approximation~1 comprises the differences between the quantum field theory and the experiments.  The major ones are that we ignore losses, ignore the trap potential, and impose periodic boundary conditions.  On the right is the mean-field version of this theory, the Gross-Pitaevskii equations.
+Experiment is, of course, the most realistic.  We expect the predictions of quantum mechanics to agree very well with the results of these tunneling experiments, so I've put it in the “quantum” column.  The most realistic theory is the atomic field theory that we intend to simulate.  Approximation~1 comprises the differences between the atomic field theory and the experiments.  The major ones are that we ignore losses, ignore the trap potential, and impose periodic boundary conditions.  On the right is the mean-field version of this theory, the Gross-Pitaevskii equations.
 
 Approximation~2 is that the amplitudes of the two components of the field are almost homogeneous, and the fluctuations are slaved to the difference between their phases.  This gives the sine-Gordon equation for the mean field, and the corresponding field theory in the quantum case.
 
@@ -41,7 +41,8 @@ The Gross-Pitaevskii equations have a parameter, unlike the classical systems at
 
 The atomic field theory has the $Ng/ν$ parameter, and also solition action parameter of the sine-Gordon field theory.  I don't know how to write this action in terms of $N$, $g$ and $ν$, because I don't fully understand the derivation of the sine-Gordon equation from the G-P equations.
 
-\vfil\break
+
+\beginsection{Atomic physics}
 
 We're thinking about two pencils of condensed Bose gas, between which particles can tunnel.  People have been interested in this largely because, in the limit of nearly-uniform density, it should reduce to a sine-Gordon field, one of the sexiest topics around.
 
@@ -56,6 +57,51 @@ We want to stabilise the upward equilibrium point by Kaptiza modulation.  This i
 The effect of Kaptiza modulation, in the adiabatic limit, is to add a term proportional to $\sin 2φ$ to the sine-Gordon equation.  One would think that, of the ten-thousand or so field theorists who've written about quantum sine-Gordon, at least one might have considered this.  Perhaps I should look at the intersection of citations from Coleman's sine-Gordon paper, and his false vacuum paper.
 
 
+\beginsection{Dynamic stabilisation}
+
+The pendulum with vertically vibrating support was solved by P.~L.~Kapitza in 1951.  The solution is most accessible as a running exercise in Landau \& Lifshitz; the means to solve it are developed in \S 30, and the solution occurs as Problem~1 on Page~95.
+
+
+\beginsection{Coleman's theory}
+
+Coleman's paper on the false vacuum studies a field that starts in a metastable state—he calls it “classically stable”—and tunnels to its ground state.  He treats this in a semiclassical manner.  This presumably means that the action of tunneling, from the metastable state to the first classically unbound state at the same energy, is large compared to $\hbar$.
+
+Coleman assume that readers remember how tunneling works; I don't.  He gives a reference to the first multdimensional treatment, and presumably they cite the original.  It looks like the WKB approximation.  The important result follows.  Consider a classical particle that tunnels through a potential $V(x)$, entering at $x₀$ and exiting at $x₁$, at which points its kinetic energy is zero; wlog $V(x₀)=V(x₁)=0$.  The rate of tunneling is proportional to $e^{-S/\hbar}$, where $S$ is the action of the same particle bouncing from $x₀$ to $x₁$ in a potential $-V(x)$.  If $x₀$ is an equilibrium point, this process takes forever.  If $x$ is a vector, or the particle is a field, this action is evaluated along the trajectory of least resistance, i.e., the one for which $S$ is least.
+
+Coleman imposes Lorentz covariance, so that the bubble of tunneled field appears the same to every inertial observer, apart from the location of its centre.  The bounce process then reduces to one-dimensional motion with a friction term (I've forgotten how friction appears in Lagrangians, too).   In some limit, where the wall between metastable field and vacuum is thin, the solution can be expressed as a single relativistic interval $R$, which is both the time on which tunneling is expected to happen, and the radius of the bubble of vacuum field that originally forms.
+
+Coleman claims that the energy liberated by the collapse of the field is absorbed by the tunneling process, and the interior of the bubble is actually in the vacuum state.  Presumably this means that the energy goes into acclerating the rate of the tunneling process, as the bubble wall accelerates towards the speed of light.  In the mechanical model for sine-Gordon, the pendulums have to rotate at a speed proportional to that of the bubble wall.  I don't understand his argument for this.  Clearly it won't happen in truncated Wigner simulations, where the field ends up in an excited state.  But perhaps it does in the large field limit, before all the field has tunneled.
+ 
+
+
+\beginsection{Truncated Wigner method}
+
+The truncated Wigner method is largely similar to the other phase space methods, P and positive {P}.  A correspondence is established between physical operations on the density operator, and differential operations on the Wigner function.  This affords the quantum master equation to be translated to a partial differential equation for the Wigner function.  The PDE and the master equation correspond exactly.
+
+When the system is a Bose-Einstein condensate, the first and second order terms of this PDE reproduce the Gross-Pitaevskii equation.  Unfortunately, the PDE includes triple derivatives, so its solution does not correspond to the distribution of solutions to any set of stochastic ODEs.  This is where the truncation comes in: the triple derivatives are simply struck out.  This can apparently be justified if the orbitals whose Wigner functions are being computed are occupied by many particles.  The path equations that would usually be stochastic are, in this case, deterministic; the randomness comes in the initial conditions.  One property of the Wigner distribution is that it is rarely singular.  Initial states have spread out Wigner functions, which must be sampled.
+
+There is a complication in interpreting the results.  In P distributions, the moment of $α*α$ is the expectation value $〈a†a〉$, which is the number of particles in the system.  Moments of the Wigner distribution correspond to symetrically-ordered expectation values, so $α*α$ gives $½〈a†a+aa†〉=〈a†a〉+½$; each mode gains an extra half particle.  When a BED is simulated, this extra particle is added by the random part of the initial conditions, so $½$ is actually a random quantity with expectation value $½$.  When the virtual particles in each mode are added up, the variance will be proportional the square root of the number of modes; when the expected half particle is subtracted, this will become a discrepancy in the total number of particles.  So the number of modes to which noise is added should be minimised.
+
+Our model has a finite length.  In the sine-Gordon limit, instabilities need to form over the length of a Josephson vortex length in order for the unstable equilibrium to topple.  Random variation will average out on scales smaller than this.  Therefore, truncating noise in modes with wavenumbers well above 1 should not much affect the result.  There are two ways to do that.  We could solve the G-P equation on a grid, generate random amplitudes, and add up a Fourier series.
+
+Otherwise, as Bogdan suggests, we could expand the G-P equation over the lowest few Fourier modes, and write down differential equations for their amplitudes.  But hang on—that's exactly what the spectral methods do in XMDS!  This is saying that we expect the numerical solutions to converge when we add gaussian noise at every grid point, but use a fairly small grid.  Is there a way to subvert XMDS's scaling of gaussian noise to the grid size?  There's another challenge in testing this: if you change the grid size in XMDS, keeping the same random seed does not give you the same random process, averaged over different grids.  We'd have to generate consistent noise some other way, and write it in explicitly.
+
+
+\beginsection{Scales}
+
+There are three quantities to scale in this problem: length, time, and the ampltiude of $ψ$.
+
+The time scale is pretty obvious.  Atoms tunnel back and forth between two components of conensate; this happens at a Rabi frequency.  In the sine-Gordon limit, I presume this becomes the resonance frequency of the linked pendulums.  This is the only important timescale of the system.  There is another scale, the time taken to traverse the cigar of condensate at the Bogilubov speed of sound.  However, the only important thing is the ratio of this to the tunneling time: for our false vacuum picture to be valid, the condensate must be long enough that the traversal time is large.
+
+Length is trickier to scale.  The atom number changes over the healing length; the condensate phase changes over the Josephson vortex length.  In the sine-Gordon limit, atomic repulsion is strong.  Changes in density are squashed by the repulsion, so they happen on shorter scales than changes in phase, which repulsion does not affect.
+
+The sine-Gordon dynamics happen at the Rabi frequency, over a Josephson vortex length.  The product of these is the speed of sound.  This scale makes the most sense for computing stability: if the system is unstable, it is likely to escape on a time around the Rabi period.  That applies for large pertubations from the unstable equilibrium.  For small pertubations, the escape time will depend on the size of the pertubation.
+
+The field amplitude is, in principle, determined by the chemical potential $μ$.  For the Gross-Pitaevskii equations to be truly stationary, $μ$, the tunneling rate $ν$, and the repulsion $g|ψ|²$ must satisfy some constraint.  However, changing $μ$ multiplies $ψ$ by a global phase $e^{iμt}$; in simulations, $μ$ will be adjusted so this global phase rotates as slowly as possible.
+
+We will consider fields that are largely homogeneous.  The amplitude of the homogeneous part can then be scaled so that $|ψ⁰|²+|ψ¹|²=1$; the only change in the equations is that the repulsio $g$ is scaled by the particle density.  This combines $N$ and $g$, eliminating one parameter.  Length could be scaled consistently, so that $|ψ|²\,dx$ was still the number of particles in the interval $dx$.  However, it would make more sense to use an unusual normalisation, to give the sine-Gordon equation the above form.  For the truncated Wigner method, we need to know the field amplitude that corresponds to half a particle on this scale.  I haven't determined that yet.
+
+
 \beginsection{Analytical mechanics}
 
 We aim to test various hypotheses about the dynamics of this system.  These hypotheses relate to a simple mechanical model, sine-Gordon, which is equivalent to the tunnelling atoms in some limit.  The classical version is very easy to visualise, and was solved by Ablowitz et.\ al in 1973.  The quantum version is exactly soluble, so we can rigorously test the truncation error in truncated Wigner, in at least one quantum limit.  The model is expressed in terms of generalised co-ordinates, so it is convenient to refer the different representations to a common Lagrangian.
@@ -64,9 +110,11 @@ The Euler-Lagrange equations for a field are derivied in Section~13.2 of Goldste
 $${\cal L}(t, x, ψ⁰, ψ¹, {\dot ψ}⁰, {\dot ψ}¹, {ψ⁰}', {ψ¹}')={\cal L}₀+{\cal L}₁+{\cal L}₂,$$
 $${\cal L}₀+{\cal L}₁ =∑_{ψ∈ψ₀,ψ₁}{i\hbar\over 2}(ψ*{\dot ψ}-ψ{\dot ψ}*) - {\hbar²\over 2m}|∂₁ψ|²+μ|ψ|²-{g\over 2}|ψ|⁴,$$
 $${\cal L}₂=γ(ψ₀*ψ₁+ψ₀ψ₁*).$$
-Here, for a candidate solution $ψ(t,x)$, $${\dot ψ}(t,x) = ∂₀ψ(t,x) \quad {\rm and} \quad ψ'(t,x) = ∂₁ψ(t,x).$$  For fields, the roles of position and time a symmetric.  The Euler-Lagrange equations are then $$ foo $$
+Here, for a candidate solution $ψ(t,x)$, $${\dot ψ}(t,x) = ∂₀ψ(t,x) \quad {\rm and} \quad ψ'(t,x) = ∂₁ψ(t,x).$$  For fields, the roles of position and time a symmetric.  The Euler-Lagrange equations are then $${d\over dt}{∂{\cal L}\over ∂{\dot ψ}} + {d\over dx}{∂{\cal L}\over ∂ψ'}={∂{\cal L}\over ψ},$$ for each component of $ψ$.
 
 \beginsection{Preliminaries}
+
+(This is out of date.)
 
 Transforming to dimensionless coordinates, $$ψ(t,x)=q\bigl(ωt, \sqrt{mμ}x/\hbar\bigr)=q(τ,χ),$$ gives 
 $$i\hbar ω∂₀q=\bigl(-½μ∂_{11}-μ+g'|q|²+g_c|\bar q|²\bigr)q-ν\bar q,$$ or
@@ -78,22 +126,6 @@ $$\bigl(gc²q²+fq²-1\bigr)c=(b/s)e^{-iφ}.$$
 The only stationary solutions occur with $φ=0,π$ and $c=1$, whence
 $$q=\sqrt{1±b/s\over g+f}.$$
 The plus sign applies to $φ=0$, the minus sign to $φ=π$.
-
-\beginsection{Scales}
-
-There are three quantities to scale in this problem: length, time, and the ampltiude of $ψ$.
-
-One set of length and time scales come from the sine-Gordon equation.  This involves a speed of sound, and a natural frequency for the coupled pendula; physically, this is a Rabi frequency for the tunneling.  These scales make the most sense for computing dynamics and stability: if the system is unstable, it is likely to escape on a time around the pendulum period.
-
-The other length scales come from statics.  But these should be captured by the sine-Gordon equation.  I expect the healing length is the speed of sound divided by the Rabi frequency, to a factor of $π$ or something.
-
-The field amplitude is, in principle, determined by the chemical potential $μ$.  For the Gross-Pitaevskii equations to be truly stationary, $μ$, the tunneling rate $ν$, and the repulsion $g|ψ|²$ must satisfy some constraint.  However, changing $μ$ multiplies $ψ$ by a global phase $e^{iμt}$; in simulations, $μ$ will be adjusted so this global phase rotates as slowly as possible.
-
-We will consider fields that are largely homogeneous.  The amplitude of the homogeneous part can then be scaled so that $|ψ⁰|²+|ψ¹|²=1$; the only change in the equations for $g$ to be multiplied by the particle density.  This combines $N$ and $g$, eliminating one parameter.  Length could be scaled consistently, so that $|ψ|²\,dx$ was still the number of particles in the interval $dx$.  However, it would make more sense to use an unusual normalisation, to give the sine-Gordon equation the above form.
-
-\beginsection{Dynamic stabilisation}
-
-The pendulum with vertically vibrating support was solved by P.~L.~Kapitza in 1951.  The solution is most accessible as a running exercise in Landau \& Lifshitz; the means to solve it are developed in \S 30, and the solution occurs as Problem~1 on Page~95.
 
 \beginsection{Questions}
 

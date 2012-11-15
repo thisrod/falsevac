@@ -25,13 +25,13 @@
   <geometry>
     <propagation_dimension> t </propagation_dimension>
     <transverse_dimensions>
-      <dimension name="space" lattice="100" domain="(-5,5)" />
+      <dimension name="space" lattice="50" domain="(-10,10)" />
     </transverse_dimensions>
   </geometry>
   
   <driver name="multi-path" paths="1" />
 
-  <noise_vector name="initialPhaseNoise" dimensions="space" kind="Gaussian" 
+  <noise_vector name="initialPhaseNoise" dimensions="space" kind="uniform" 
       type="real">
     <components>nrml</components>
   </noise_vector>
@@ -43,7 +43,7 @@
       <![CDATA[
       q00 = U/sqrt(2.0);
       q01 = F*q00;
-      q00 *= cos(dF*nrml) + i*sin(dF*nrml);
+      q00 *= cos(dF*(2*nrml-1)) + i*sin(dF*(2*nrml-1));
       ]]>
     </initialisation>
   </vector>
@@ -70,12 +70,13 @@
   </computed_vector>
   
   <computed_vector name="rphs" dimensions="" type="real">
-    <components>f0 f1</components>
+    <components>f f0 f1</components>
     <evaluation>
       <dependencies>meanFields</dependencies>
       <![CDATA[
-        f0 = arg(q0)/10.0;
-        f1 = arg(q1)/10.0;
+        f0 = arg(q0)/20.0;
+        f1 = arg(q1)/20.0;
+        f = sin(arg(q1)-arg(q0))/20.0;
      ]]>
     </evaluation>
   </computed_vector>
@@ -86,8 +87,8 @@
       	<dependencies>meanFields</dependencies>
     </breakpoint>
        
-    <integrate algorithm="SI" interval="30.0" steps="100000">
-      <samples>1000 100</samples>
+    <integrate algorithm="ARK45" interval="100.0" tolerance="1e-6">
+      <samples>100 500</samples>
       <operators>
         <integration_vectors>meanFields</integration_vectors>
         <operator kind="ex" constant="yes">
@@ -118,11 +119,12 @@
     </sampling_group>
     
     <sampling_group basis="" initial_sample="yes">
-      <moments>ff0 ff1</moments>
+      <moments>disc phs0 phs1</moments>
       <dependencies>rphs</dependencies>
       <![CDATA[
-        ff0 = f0;
-        ff1 = f1;
+        disc = f;
+        phs0 = f0;
+        phs1 = f1;
       ]]>
     </sampling_group>
   </output>

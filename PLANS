@@ -1,0 +1,6 @@
+Figure out what noise amplitude corresponds to half a particle, the way we've scaled the atomic field.
+Check the derivation of the sine-Gordon equation (∂₁₁-∂₀₀)φ=sinφ, and the necessary scaling
+Figure out what combinations of driving amplitude and Δφ are dynamically stable, in the L&L approximation
+Figure out what moment to compute, to compare with the Coleman theory.  Potential energy of the field?
+Literature review of Kapitza stabilisation
+Compare Coleman/Kapitza tunneling times with truncated Wigner results
