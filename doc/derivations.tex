@@ -11,7 +11,15 @@
 The Gross-Pitaevskii equations from Sascha's notes are 
 $$i\hbar ∂₀ψ=\biggl(-{\hbar²\over 2m}∂_{11}-μ+g'|ψ|²+g_c|\bar ψ|²\bigg)ψ-ν\bar ψ,$$ where $ψ=(ψ⁰,ψ¹)$, and $\bar ψ=(ψ¹,ψ⁰)$, and absolute values are taken elementally.  Of the parameters, only $g'$ is a vector: $μ$, $g_c$ and $ν$ are scalars.  Only $ν$ depends on time, as $ν=ν₀+αω\cos(ωt)$.  For simplicity, we'll consider the case where $g⁰=g¹=g$, and $g_c=0$.
 
-\beginsection{Overreview}
+
+\beginsection{The idea}
+
+In 1977, Coleman thought up a fascinating question: when a quantum field has a metastable state, how does that state decay?  Part of the facination comes from autoerotic cosmology.  As Coleman put it, if our universe has a decay time on the order of ten billion years, we have cause for anxiety, very mild anxiety, of course, compared to the curiosity the question provokes in its own right.
+
+In the same paper where Coleman askes this question, he answers it, in the limit where the action of the decay process is classically large.  A bubble forms, then expands at the speed of light, leaving the true vacuum state inside.  To our knowledge, and we really should find out, the decay of such a “false vacuum” has yet to be seen.  We aim to determine whether it can be demonstrated by cold atoms Rabi flipping between two states, with the Rabi frequency modulated so that the unstable state of mean-field equilibrium becomes metastable due to Kapitza stabilisation.
+
+
+\beginsection{Literature overreview}
 
 At the start of our journey of discovery, the terrain has been trampled by field theorists, several armies of mathematicians, Landau, Lifshitz, and assorted sightseers.  These hordes have left many tracks: some offer us essential shortcuts, many end in chaos.  Hence the map below.  Top left is most realistic, bottom right is most approximate.  Left is quantum, right is classical or mean-field.  Down is other kinds of approximation, labeled in bold and explained below.
 
@@ -71,7 +79,6 @@ Coleman assume that readers remember how tunneling works; I don't.  He gives a r
 Coleman imposes Lorentz covariance, so that the bubble of tunneled field appears the same to every inertial observer, apart from the location of its centre.  The bounce process then reduces to one-dimensional motion with a friction term (I've forgotten how friction appears in Lagrangians, too).   In some limit, where the wall between metastable field and vacuum is thin, the solution can be expressed as a single relativistic interval $R$, which is both the time on which tunneling is expected to happen, and the radius of the bubble of vacuum field that originally forms.
 
 Coleman claims that the energy liberated by the collapse of the field is absorbed by the tunneling process, and the interior of the bubble is actually in the vacuum state.  Presumably this means that the energy goes into acclerating the rate of the tunneling process, as the bubble wall accelerates towards the speed of light.  In the mechanical model for sine-Gordon, the pendulums have to rotate at a speed proportional to that of the bubble wall.  I don't understand his argument for this.  Clearly it won't happen in truncated Wigner simulations, where the field ends up in an excited state.  But perhaps it does in the large field limit, before all the field has tunneled.
- 
 
 
 \beginsection{Truncated Wigner method}
@@ -82,9 +89,11 @@ When the system is a Bose-Einstein condensate, the first and second order terms 
 
 There is a complication in interpreting the results.  In P distributions, the moment of $α*α$ is the expectation value $〈a†a〉$, which is the number of particles in the system.  Moments of the Wigner distribution correspond to symetrically-ordered expectation values, so $α*α$ gives $½〈a†a+aa†〉=〈a†a〉+½$; each mode gains an extra half particle.  When a BED is simulated, this extra particle is added by the random part of the initial conditions, so $½$ is actually a random quantity with expectation value $½$.  When the virtual particles in each mode are added up, the variance will be proportional the square root of the number of modes; when the expected half particle is subtracted, this will become a discrepancy in the total number of particles.  So the number of modes to which noise is added should be minimised.
 
-Our model has a finite length.  In the sine-Gordon limit, instabilities need to form over the length of a Josephson vortex length in order for the unstable equilibrium to topple.  Random variation will average out on scales smaller than this.  Therefore, truncating noise in modes with wavenumbers well above 1 should not much affect the result.  There are two ways to do that.  We could solve the G-P equation on a grid, generate random amplitudes, and add up a Fourier series.
+Our model has a finite length.  In the sine-Gordon limit, instabilities need to form over the length of a Josephson vortex length in order for the unstable equilibrium to topple.  Random variation will average out on scales smaller than this.  Therefore, truncating noise in modes with wavenumbers well above 1 should not much affect the result.  There are two ways to do that.  We could solve the G-P equation on a grid, generate random amplitudes, and add up a Fourier series.  The second moment of the noise is largely determined , which determines the energy available for the field to overcome the stabilisation barrier, is 
 
 Otherwise, as Bogdan suggests, we could expand the G-P equation over the lowest few Fourier modes, and write down differential equations for their amplitudes.  But hang on—that's exactly what the spectral methods do in XMDS!  This is saying that we expect the numerical solutions to converge when we add gaussian noise at every grid point, but use a fairly small grid.  Is there a way to subvert XMDS's scaling of gaussian noise to the grid size?  There's another challenge in testing this: if you change the grid size in XMDS, keeping the same random seed does not give you the same random process, averaged over different grids.  We'd have to generate consistent noise some other way, and write it in explicitly.
+
+The truncated Wigner method will obviously not work when the dynamic stabilisation is strong, and the metastable state bound tightly.  The trajectories are classical.  None of them can tunnel on their own, therefore the ensemble won't tunnel on average.
 
 
 \beginsection{Scales}
